@@ -1,0 +1,30 @@
+{
+  "name": "fcc-drum-machine",
+  "version": "1.0.0",
+  "description": "freeCodeCamp build a drum machine",
+  "main": "index.js",
+  "dependencies": {
+    "bulma": "^0.7.4",
+    "fsevents": "^1.2.7",
+    "parcel-bundler": "^1.11.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.14.1",
+    "sass": "^1.17.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ceboulba/fcc-drum-machine.git"
+  },
+  "keywords": [],
+  "author": "Archipicture",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ceboulba/fcc-drum-machine/issues"
+  },
+  "homepage": "https://github.com/ceboulba/fcc-drum-machine#readme"
+}
