@@ -175,15 +175,23 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("helloWorld");
-  var root = document.getElementById("root");
+  //je prend le root
+  var root = document.getElementById("root"); //je .map() bankOne pour créer les <li>
 
   var elem = _bankOne.default.map(function (el) {
-    return "<li class=\"button key\" data-key=\"".concat(el.keyCode, "\" id=\"").concat(el.id, "\">").concat(el.keyTrigger, "\n        <audio src=\"").concat(el.url, "\" data-key=").concat(el.keyCode, "></audio>\n        </li>");
-  }).join("");
+    return "<li class=\"button key drum-pad\" id=\"".concat(el.id, "\" data-key=\"").concat(el.keyCode, "\">").concat(el.keyTrigger, "\n        <audio src=\"").concat(el.url, "\" class=\"clip\" id=\"").concat(el.keyTrigger, "\" data-key=").concat(el.keyCode, "></audio>\n        </li>");
+  }).join(""); //j'injecte mes li dans root
 
-  root.innerHTML = "<ul>".concat(elem, "</ul>");
-  window.addEventListener("keydown", function (e) {
+
+  root.innerHTML = "<ul id=\"display\">".concat(elem, "</ul>");
+  window.addEventListener("keydown", drumMachine); //event click drum-pad
+
+  var drums = _toConsumableArray(document.getElementsByClassName("drum-pad")).map(function (drum) {
+    return drum.addEventListener("click", drumMachine);
+  });
+
+  function drumMachine(e) {
+    //console.log(e)
     var audio = document.querySelector("audio[data-key=\"".concat(e.keyCode, "\"]"));
     var key = document.querySelector("li.key[data-key=\"".concat(e.keyCode, "\"]"));
     if (!audio) return;
@@ -192,15 +200,15 @@ document.addEventListener("DOMContentLoaded", function () {
     key.classList.add("active"); //console.log(audio)
 
     console.log(key);
-  });
 
-  var keys = _toConsumableArray(document.querySelectorAll("li.key")).map(function (key) {
-    return key.addEventListener("transitionend", removeClass);
-  });
+    var keys = _toConsumableArray(document.querySelectorAll("li.key")).map(function (key) {
+      return key.addEventListener("transitionend", removeClass);
+    });
 
-  function removeClass(e) {
-    if (e.propertyName !== "transform") return;
-    this.classList.remove("active");
+    function removeClass(e) {
+      if (e.propertyName !== "transform") return;
+      this.classList.remove("active");
+    }
   }
 });
 },{"./bankOne":"src/js/bankOne.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
@@ -230,7 +238,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58418" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50806" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
