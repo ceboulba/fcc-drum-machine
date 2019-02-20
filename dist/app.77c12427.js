@@ -166,15 +166,42 @@ var _bankOne = _interopRequireDefault(require("./bankOne"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 document.addEventListener("DOMContentLoaded", function () {
   console.log("helloWorld");
   var root = document.getElementById("root");
 
   var elem = _bankOne.default.map(function (el) {
-    return "<li id=\"".concat(el.id, "\">").concat(el.url, "</li>");
-  });
+    return "<li class=\"button key\" data-key=\"".concat(el.keyCode, "\" id=\"").concat(el.id, "\">").concat(el.keyTrigger, "\n        <audio src=\"").concat(el.url, "\" data-key=").concat(el.keyCode, "></audio>\n        </li>");
+  }).join("");
 
   root.innerHTML = "<ul>".concat(elem, "</ul>");
+  window.addEventListener("keydown", function (e) {
+    var audio = document.querySelector("audio[data-key=\"".concat(e.keyCode, "\"]"));
+    var key = document.querySelector("li.key[data-key=\"".concat(e.keyCode, "\"]"));
+    if (!audio) return;
+    audio.currentTime = 0;
+    audio.play();
+    key.classList.add("active"); //console.log(audio)
+
+    console.log(key);
+  });
+
+  var keys = _toConsumableArray(document.querySelectorAll("li.key")).map(function (key) {
+    return key.addEventListener("transitionend", removeClass);
+  });
+
+  function removeClass(e) {
+    if (e.propertyName !== "transform") return;
+    this.classList.remove("active");
+  }
 });
 },{"./bankOne":"src/js/bankOne.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -203,7 +230,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55573" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58418" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

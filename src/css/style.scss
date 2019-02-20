@@ -1,1 +1,11 @@
-@import './../../node_modules/bulma/bulma.sass';
+li.key {
+  transition: all 0.07s;
+  margin: 5px;
+}
+
+li.active {
+  border: 2px solid red;
+  transform: scale(1.1);
+}
+
+@import "./../../node_modules/bulma/bulma.sass";
