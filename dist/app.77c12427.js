@@ -175,7 +175,7 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 document.addEventListener("DOMContentLoaded", function () {
-  //je prend le root
+  //je recup #root
   var root = document.getElementById("root"); //je .map() bankOne pour créer les <li>
 
   var elem = _bankOne.default.map(function (el) {
@@ -192,15 +192,26 @@ document.addEventListener("DOMContentLoaded", function () {
     return drum.addEventListener("click", drumMachine);
   });
 
+  var buttonsReaction = _toConsumableArray(document.getElementsByClassName("button")).map(function (li) {
+    return li.addEventListener("click", drumMachine);
+  });
+
   function drumMachine(e) {
-    console.log(e);
     var audio = document.querySelector("audio[data-key=\"".concat(e.keyCode, "\"]"));
     var key = document.querySelector("li.key[data-key=\"".concat(e.keyCode, "\"]"));
+    console.log(e);
+    var clickButton = e.target.dataset.key;
+
+    if (clickButton) {
+      audio = document.querySelector("audio[data-key=\"".concat(clickButton, "\"]"));
+      key = document.querySelector("li.key[data-key=\"".concat(clickButton, "\"]"));
+    }
+
     if (!audio) return;
     audio.currentTime = 0;
     audio.play();
     key.classList.add("active");
-    soundName.innerText = e.key;
+    soundName.innerText = e.target.id;
     console.log(soundName);
     console.log(e);
 
@@ -241,7 +252,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53225" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54885" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

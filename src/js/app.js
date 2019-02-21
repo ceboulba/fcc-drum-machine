@@ -1,7 +1,7 @@
 import bankOne from "./bankOne"
 
 document.addEventListener("DOMContentLoaded", function() {
-  //je prend le root
+  //je recup #root
   const root = document.getElementById("root")
 
   //je .map() bankOne pour créer les <li>
@@ -38,15 +38,24 @@ document.addEventListener("DOMContentLoaded", function() {
     drum.addEventListener("click", drumMachine)
   )
 
+  const buttonsReaction = [...document.getElementsByClassName("button")].map(
+    li => li.addEventListener("click", drumMachine)
+  )
+
   function drumMachine(e) {
+    let audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
+    let key = document.querySelector(`li.key[data-key="${e.keyCode}"]`)
     console.log(e)
-    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
-    const key = document.querySelector(`li.key[data-key="${e.keyCode}"]`)
+    const clickButton = e.target.dataset.key
+    if (clickButton) {
+      audio = document.querySelector(`audio[data-key="${clickButton}"]`)
+      key = document.querySelector(`li.key[data-key="${clickButton}"]`)
+    }
     if (!audio) return
     audio.currentTime = 0
     audio.play()
     key.classList.add("active")
-    soundName.innerText = e.key
+    soundName.innerText = e.target.id
     console.log(soundName)
     console.log(e)
 
