@@ -1,11 +1,14 @@
 li.key {
   transition: all 0.07s;
-  margin: 5px;
+  margin: 1rem;
+  position: relative;
+  height: 5rem;
+  width: 5rem;
 }
 
 li.active {
+  transform: scale(1.5);
   border: 2px solid red;
-  transform: scale(1.1);
 }
 
-@import "./../../node_modules/bulma/bulma.sass";
+@import './../../node_modules/bulma/bulma.sass';

@@ -20,14 +20,25 @@ document.addEventListener('DOMContentLoaded', function() {
     .join('')
 
   //j'injecte mes li dans root
-  root.innerHTML = `<div class="hero is-fullheight">
-                      <div class="hero-body">
-                        <div class="has-text-centered container">
-                          <ul id="">${elem}</ul>
-                          <div class="title" id="display"></div>
-                        </div>
-                      </div>
-                    </div>`
+  root.innerHTML = `
+  <div class="hero is-fullheight">
+  <div class="hero-body">
+    <div class="container">
+      <div class="has-text-centered">
+        <div class="title">DrumMachine</div>
+        <div class="subtitle">FreeCodeCamp</div>
+      </div>
+      <hr />
+      <div class="has-text-centered container">
+        <ul>
+          ${elem}
+        </ul>
+        <div class="title" id="display"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  `
 
   //je recup #soundName
   const soundName = document.getElementById('display')
@@ -46,29 +57,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function drumMachine(e) {
     console.log('type => ', e)
-    let audio =
+    const audio =
       document.querySelector(`audio[data-key="${e.keyCode}"]`) ||
       document.querySelector(`audio[data-key="${e.target.dataset.key}"]`)
+    const key = audio.parentElement
 
-    console.log('audio => ', audio.getAttribute('name'))
-    // const clickButton = e.target.dataset.key
-    // if (clickButton) {
-    //   audio = document.querySelector(`audio[data-key="${clickButton}"]`)
-    //   key = document.querySelector(`li.key[data-key="${clickButton}"]`)
-    // }
+    //console.log('audio => ', audio.parentElement)
+
     if (!audio) return
     audio.currentTime = 0
     audio.play()
-    // key.classList.add('active')
+    key.classList.add('active')
     soundName.innerText = audio.getAttribute('name')
-    // console.log(soundName)
-    // console.log(e)
-    // const keys = [...document.querySelectorAll('li.key')].map(key =>
-    //   key.addEventListener('transitionend', removeClass)
-    // )
-    // function removeClass(e) {
-    //   if (e.propertyName !== 'transform') return
-    //   this.classList.remove('active')
-    // }
+    key.addEventListener('transitionend', removeClass)
+    function removeClass(e) {
+      if (e.propertyName !== 'transform') return
+      this.classList.remove('active')
+    }
   }
 })

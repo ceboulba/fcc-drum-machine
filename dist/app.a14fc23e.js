@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }).join('');
 
   //j'injecte mes li dans root
-  root.innerHTML = '<div class="hero is-fullheight">\n                      <div class="hero-body">\n                        <div class="has-text-centered container">\n                          <ul id="">' + elem + '</ul>\n                          <div class="title" id="display"></div>\n                        </div>\n                      </div>\n                    </div>';
+  root.innerHTML = '\n  <div class="hero is-fullheight">\n  <div class="hero-body">\n    <div class="container">\n      <div class="has-text-centered">\n        <div class="title">DrumMachine</div>\n        <div class="subtitle">FreeCodeCamp</div>\n      </div>\n      <hr />\n      <div class="has-text-centered container">\n        <ul>\n          ' + elem + '\n        </ul>\n        <div class="title" id="display"></div>\n      </div>\n    </div>\n  </div>\n</div>\n  ';
 
   //je recup #soundName
   var soundName = document.getElementById('display');
@@ -198,27 +198,20 @@ document.addEventListener('DOMContentLoaded', function () {
   function drumMachine(e) {
     console.log('type => ', e);
     var audio = document.querySelector('audio[data-key="' + e.keyCode + '"]') || document.querySelector('audio[data-key="' + e.target.dataset.key + '"]');
+    var key = audio.parentElement;
 
-    console.log('audio => ', audio.getAttribute('name'));
-    // const clickButton = e.target.dataset.key
-    // if (clickButton) {
-    //   audio = document.querySelector(`audio[data-key="${clickButton}"]`)
-    //   key = document.querySelector(`li.key[data-key="${clickButton}"]`)
-    // }
+    //console.log('audio => ', audio.parentElement)
+
     if (!audio) return;
     audio.currentTime = 0;
     audio.play();
-    // key.classList.add('active')
+    key.classList.add('active');
     soundName.innerText = audio.getAttribute('name');
-    // console.log(soundName)
-    // console.log(e)
-    // const keys = [...document.querySelectorAll('li.key')].map(key =>
-    //   key.addEventListener('transitionend', removeClass)
-    // )
-    // function removeClass(e) {
-    //   if (e.propertyName !== 'transform') return
-    //   this.classList.remove('active')
-    // }
+    key.addEventListener('transitionend', removeClass);
+    function removeClass(e) {
+      if (e.propertyName !== 'transform') return;
+      this.classList.remove('active');
+    }
   }
 });
 },{"./bankOne":"src\\js\\bankOne.js"}],"C:\\Users\\antoi\\AppData\\Roaming\\npm\\node_modules\\parcel-bundler\\src\\builtins\\hmr-runtime.js":[function(require,module,exports) {
