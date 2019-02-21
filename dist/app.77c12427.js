@@ -179,11 +179,13 @@ document.addEventListener("DOMContentLoaded", function () {
   var root = document.getElementById("root"); //je .map() bankOne pour créer les <li>
 
   var elem = _bankOne.default.map(function (el) {
-    return "<li class=\"button key drum-pad\" id=\"".concat(el.id, "\" data-key=\"").concat(el.keyCode, "\">").concat(el.keyTrigger, "\n        <audio src=\"").concat(el.url, "\" class=\"clip\" id=\"").concat(el.keyTrigger, "\" data-key=").concat(el.keyCode, "></audio>\n        </li>");
+    return "<li class=\"button is-large key drum-pad\" id=\"".concat(el.id, "\" data-key=\"").concat(el.keyCode, "\">").concat(el.keyTrigger, "\n        <audio src=\"").concat(el.url, "\" class=\"clip\" id=\"").concat(el.keyTrigger, "\" data-key=").concat(el.keyCode, "></audio>\n        </li>");
   }).join(""); //j'injecte mes li dans root
 
 
-  root.innerHTML = "<ul id=\"display\">".concat(elem, "</ul>");
+  root.innerHTML = "<div class=\"hero is-fullheight\">\n                      <div class=\"hero-body\">\n                        <div class=\"has-text-centered container\">\n                          <ul id=\"display\">".concat(elem, "</ul>\n                          <div class=\"title\" id=\"soundName\"></div>\n                        </div>\n                      </div>\n                    </div>"); //je recup #soundName
+
+  var soundName = document.getElementById("soundName");
   window.addEventListener("keydown", drumMachine); //event click drum-pad
 
   var drums = _toConsumableArray(document.getElementsByClassName("drum-pad")).map(function (drum) {
@@ -191,15 +193,16 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function drumMachine(e) {
-    //console.log(e)
+    console.log(e);
     var audio = document.querySelector("audio[data-key=\"".concat(e.keyCode, "\"]"));
     var key = document.querySelector("li.key[data-key=\"".concat(e.keyCode, "\"]"));
     if (!audio) return;
     audio.currentTime = 0;
     audio.play();
-    key.classList.add("active"); //console.log(audio)
-
-    console.log(key);
+    key.classList.add("active");
+    soundName.innerText = e.key;
+    console.log(soundName);
+    console.log(e);
 
     var keys = _toConsumableArray(document.querySelectorAll("li.key")).map(function (key) {
       return key.addEventListener("transitionend", removeClass);
@@ -238,7 +241,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50806" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53225" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
   const elem = bankOne
     .map(
       el =>
-        `<li class="button key drum-pad" id="${el.id}" data-key="${
+        `<li class="button is-large key drum-pad" id="${el.id}" data-key="${
           el.keyCode
         }">${el.keyTrigger}
         <audio src="${el.url}" class="clip" id="${el.keyTrigger}" data-key=${
@@ -19,7 +19,17 @@ document.addEventListener("DOMContentLoaded", function() {
     .join("")
 
   //j'injecte mes li dans root
-  root.innerHTML = `<ul id="display">${elem}</ul>`
+  root.innerHTML = `<div class="hero is-fullheight">
+                      <div class="hero-body">
+                        <div class="has-text-centered container">
+                          <ul id="display">${elem}</ul>
+                          <div class="title" id="soundName"></div>
+                        </div>
+                      </div>
+                    </div>`
+
+  //je recup #soundName
+  const soundName = document.getElementById("soundName")
 
   window.addEventListener("keydown", drumMachine)
 
@@ -29,15 +39,16 @@ document.addEventListener("DOMContentLoaded", function() {
   )
 
   function drumMachine(e) {
-    //console.log(e)
+    console.log(e)
     const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
     const key = document.querySelector(`li.key[data-key="${e.keyCode}"]`)
     if (!audio) return
     audio.currentTime = 0
     audio.play()
     key.classList.add("active")
-    //console.log(audio)
-    console.log(key)
+    soundName.innerText = e.key
+    console.log(soundName)
+    console.log(e)
 
     const keys = [...document.querySelectorAll("li.key")].map(key =>
       key.addEventListener("transitionend", removeClass)
