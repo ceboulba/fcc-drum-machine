@@ -2,7 +2,7 @@ import bankOne from './bankOne'
 
 document.addEventListener('DOMContentLoaded', function() {
   //je recup #root
-  const root = document.getElementById('root')
+  const root = document.getElementById('drum-machine')
 
   //je .map() bankOne pour créer les <li>
   const elem = bankOne
@@ -13,7 +13,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }">${el.keyTrigger}
         <audio src="${el.url}" class="clip" id="${el.keyTrigger}" data-key=${
           el.keyCode
-        }></audio>
+        } name=${el.id}>
+        </audio>
         </li>`
     )
     .join('')
@@ -22,14 +23,15 @@ document.addEventListener('DOMContentLoaded', function() {
   root.innerHTML = `<div class="hero is-fullheight">
                       <div class="hero-body">
                         <div class="has-text-centered container">
-                          <ul id="display">${elem}</ul>
-                          <div class="title" id="soundName"></div>
+                          <ul id="">${elem}</ul>
+                          <div class="title" id="display"></div>
                         </div>
                       </div>
                     </div>`
 
   //je recup #soundName
-  const soundName = document.getElementById('soundName')
+  const soundName = document.getElementById('display')
+  soundName.innerText = 'play'
 
   window.addEventListener('keydown', drumMachine)
 
@@ -43,29 +45,30 @@ document.addEventListener('DOMContentLoaded', function() {
   )
 
   function drumMachine(e) {
-    let audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
-    let key = document.querySelector(`li.key[data-key="${e.keyCode}"]`)
-    console.log(e)
-    const clickButton = e.target.dataset.key
-    if (clickButton) {
-      audio = document.querySelector(`audio[data-key="${clickButton}"]`)
-      key = document.querySelector(`li.key[data-key="${clickButton}"]`)
-    }
+    console.log('type => ', e)
+    let audio =
+      document.querySelector(`audio[data-key="${e.keyCode}"]`) ||
+      document.querySelector(`audio[data-key="${e.target.dataset.key}"]`)
+
+    console.log('audio => ', audio.getAttribute('name'))
+    // const clickButton = e.target.dataset.key
+    // if (clickButton) {
+    //   audio = document.querySelector(`audio[data-key="${clickButton}"]`)
+    //   key = document.querySelector(`li.key[data-key="${clickButton}"]`)
+    // }
     if (!audio) return
     audio.currentTime = 0
     audio.play()
-    key.classList.add('active')
-    soundName.innerText = e.target.id
-    console.log(soundName)
-    console.log(e)
-
-    const keys = [...document.querySelectorAll('li.key')].map(key =>
-      key.addEventListener('transitionend', removeClass)
-    )
-
-    function removeClass(e) {
-      if (e.propertyName !== 'transform') return
-      this.classList.remove('active')
-    }
+    // key.classList.add('active')
+    soundName.innerText = audio.getAttribute('name')
+    // console.log(soundName)
+    // console.log(e)
+    // const keys = [...document.querySelectorAll('li.key')].map(key =>
+    //   key.addEventListener('transitionend', removeClass)
+    // )
+    // function removeClass(e) {
+    //   if (e.propertyName !== 'transform') return
+    //   this.classList.remove('active')
+    // }
   }
 })

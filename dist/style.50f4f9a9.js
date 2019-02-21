@@ -103,125 +103,73 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   // Override the current require with this new one
   return newRequire;
-})({"src\\js\\bankOne.js":[function(require,module,exports) {
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var bankOne = [{
-  keyCode: 81,
-  keyTrigger: 'Q',
-  id: 'Heater-1',
-  url: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3'
-}, {
-  keyCode: 87,
-  keyTrigger: 'W',
-  id: 'Heater-2',
-  url: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3'
-}, {
-  keyCode: 69,
-  keyTrigger: 'E',
-  id: 'Heater-3',
-  url: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3'
-}, {
-  keyCode: 65,
-  keyTrigger: 'A',
-  id: 'Heater-4',
-  url: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3'
-}, {
-  keyCode: 83,
-  keyTrigger: 'S',
-  id: 'Clap',
-  url: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3'
-}, {
-  keyCode: 68,
-  keyTrigger: 'D',
-  id: 'Open-HH',
-  url: 'https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3'
-}, {
-  keyCode: 90,
-  keyTrigger: 'Z',
-  id: 'Kick-n-Hat',
-  url: 'https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3'
-}, {
-  keyCode: 88,
-  keyTrigger: 'X',
-  id: 'Kick',
-  url: 'https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3'
-}, {
-  keyCode: 67,
-  keyTrigger: 'C',
-  id: 'Closed-HH',
-  url: 'https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3'
-}];
-
-exports.default = bankOne;
-},{}],"src\\js\\app.js":[function(require,module,exports) {
-'use strict';
-
-var _bankOne = require('./bankOne');
-
-var _bankOne2 = _interopRequireDefault(_bankOne);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-document.addEventListener('DOMContentLoaded', function () {
-  //je recup #root
-  var root = document.getElementById('drum-machine');
-
-  //je .map() bankOne pour créer les <li>
-  var elem = _bankOne2.default.map(function (el) {
-    return '<li class="button is-large key drum-pad" id="' + el.id + '" data-key="' + el.keyCode + '">' + el.keyTrigger + '\n        <audio src="' + el.url + '" class="clip" id="' + el.keyTrigger + '" data-key=' + el.keyCode + ' name=' + el.id + '>\n        </audio>\n        </li>';
-  }).join('');
-
-  //j'injecte mes li dans root
-  root.innerHTML = '<div class="hero is-fullheight">\n                      <div class="hero-body">\n                        <div class="has-text-centered container">\n                          <ul id="">' + elem + '</ul>\n                          <div class="title" id="display"></div>\n                        </div>\n                      </div>\n                    </div>';
-
-  //je recup #soundName
-  var soundName = document.getElementById('display');
-  soundName.innerText = 'play';
-
-  window.addEventListener('keydown', drumMachine);
-
-  //event click drum-pad
-  var drums = [].concat(_toConsumableArray(document.getElementsByClassName('drum-pad'))).map(function (drum) {
-    return drum.addEventListener('click', drumMachine);
-  });
-
-  var buttonsReaction = [].concat(_toConsumableArray(document.getElementsByClassName('button'))).map(function (li) {
-    return li.addEventListener('click', drumMachine);
-  });
-
-  function drumMachine(e) {
-    console.log('type => ', e);
-    var audio = document.querySelector('audio[data-key="' + e.keyCode + '"]') || document.querySelector('audio[data-key="' + e.target.dataset.key + '"]');
-
-    console.log('audio => ', audio.getAttribute('name'));
-    // const clickButton = e.target.dataset.key
-    // if (clickButton) {
-    //   audio = document.querySelector(`audio[data-key="${clickButton}"]`)
-    //   key = document.querySelector(`li.key[data-key="${clickButton}"]`)
-    // }
-    if (!audio) return;
-    audio.currentTime = 0;
-    audio.play();
-    // key.classList.add('active')
-    soundName.innerText = audio.getAttribute('name');
-    // console.log(soundName)
-    // console.log(e)
-    // const keys = [...document.querySelectorAll('li.key')].map(key =>
-    //   key.addEventListener('transitionend', removeClass)
-    // )
-    // function removeClass(e) {
-    //   if (e.propertyName !== 'transform') return
-    //   this.classList.remove('active')
-    // }
+})({"C:\\Users\\antoi\\AppData\\Roaming\\npm\\node_modules\\parcel-bundler\\src\\builtins\\bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
   }
-});
-},{"./bankOne":"src\\js\\bankOne.js"}],"C:\\Users\\antoi\\AppData\\Roaming\\npm\\node_modules\\parcel-bundler\\src\\builtins\\hmr-runtime.js":[function(require,module,exports) {
+
+  return bundleURL;
+}
+
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp):\/\/[^)\n]+/g);
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
+  }
+
+  return '/';
+}
+
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp):\/\/.+)\/[^/]+$/, '$1') + '/';
+}
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"C:\\Users\\antoi\\AppData\\Roaming\\npm\\node_modules\\parcel-bundler\\src\\builtins\\css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+  newLink.onload = function () {
+    link.remove();
+  };
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+
+    cssTimeout = null;
+  }, 50);
+}
+
+module.exports = reloadCSS;
+},{"./bundle-url":"C:\\Users\\antoi\\AppData\\Roaming\\npm\\node_modules\\parcel-bundler\\src\\builtins\\bundle-url.js"}],"src\\css\\style.scss":[function(require,module,exports) {
+
+var reloadCSS = require('_css_loader');
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"C:\\Users\\antoi\\AppData\\Roaming\\npm\\node_modules\\parcel-bundler\\src\\builtins\\css-loader.js"}],"C:\\Users\\antoi\\AppData\\Roaming\\npm\\node_modules\\parcel-bundler\\src\\builtins\\hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 
@@ -391,5 +339,4 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},["C:\\Users\\antoi\\AppData\\Roaming\\npm\\node_modules\\parcel-bundler\\src\\builtins\\hmr-runtime.js","src\\js\\app.js"], null)
-//# sourceMappingURL=/app.a14fc23e.map
+},{}]},{},["C:\\Users\\antoi\\AppData\\Roaming\\npm\\node_modules\\parcel-bundler\\src\\builtins\\hmr-runtime.js"], null)
