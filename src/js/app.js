@@ -1,8 +1,8 @@
-import bankOne from "./bankOne"
+import bankOne from './bankOne'
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener('DOMContentLoaded', function() {
   //je recup #root
-  const root = document.getElementById("root")
+  const root = document.getElementById('root')
 
   //je .map() bankOne pour créer les <li>
   const elem = bankOne
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }></audio>
         </li>`
     )
-    .join("")
+    .join('')
 
   //j'injecte mes li dans root
   root.innerHTML = `<div class="hero is-fullheight">
@@ -29,17 +29,17 @@ document.addEventListener("DOMContentLoaded", function() {
                     </div>`
 
   //je recup #soundName
-  const soundName = document.getElementById("soundName")
+  const soundName = document.getElementById('soundName')
 
-  window.addEventListener("keydown", drumMachine)
+  window.addEventListener('keydown', drumMachine)
 
   //event click drum-pad
-  const drums = [...document.getElementsByClassName("drum-pad")].map(drum =>
-    drum.addEventListener("click", drumMachine)
+  const drums = [...document.getElementsByClassName('drum-pad')].map(drum =>
+    drum.addEventListener('click', drumMachine)
   )
 
-  const buttonsReaction = [...document.getElementsByClassName("button")].map(
-    li => li.addEventListener("click", drumMachine)
+  const buttonsReaction = [...document.getElementsByClassName('button')].map(
+    li => li.addEventListener('click', drumMachine)
   )
 
   function drumMachine(e) {
@@ -54,18 +54,18 @@ document.addEventListener("DOMContentLoaded", function() {
     if (!audio) return
     audio.currentTime = 0
     audio.play()
-    key.classList.add("active")
+    key.classList.add('active')
     soundName.innerText = e.target.id
     console.log(soundName)
     console.log(e)
 
-    const keys = [...document.querySelectorAll("li.key")].map(key =>
-      key.addEventListener("transitionend", removeClass)
+    const keys = [...document.querySelectorAll('li.key')].map(key =>
+      key.addEventListener('transitionend', removeClass)
     )
 
     function removeClass(e) {
-      if (e.propertyName !== "transform") return
-      this.classList.remove("active")
+      if (e.propertyName !== 'transform') return
+      this.classList.remove('active')
     }
   }
 })
