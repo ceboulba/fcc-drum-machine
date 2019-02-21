@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
   root.innerHTML = `
   <div class="hero is-fullheight">
   <div class="hero-body">
-    <div class="container">
+    <div class="container box">
       <div class="has-text-centered">
         <div class="title">DrumMachine</div>
         <div class="subtitle">FreeCodeCamp</div>
@@ -61,14 +61,13 @@ document.addEventListener('DOMContentLoaded', function() {
       document.querySelector(`audio[data-key="${e.keyCode}"]`) ||
       document.querySelector(`audio[data-key="${e.target.dataset.key}"]`)
     const key = audio.parentElement
-
-    //console.log('audio => ', audio.parentElement)
+    console.log('key => ', key)
 
     if (!audio) return
     audio.currentTime = 0
     audio.play()
     key.classList.add('active')
-    soundName.innerText = audio.getAttribute('name')
+    soundName.innerText = `sound name : ${audio.getAttribute('name')}`
     key.addEventListener('transitionend', removeClass)
     function removeClass(e) {
       if (e.propertyName !== 'transform') return

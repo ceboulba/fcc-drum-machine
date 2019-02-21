@@ -1,3 +1,5 @@
+@import './../../node_modules/bulma/bulma.sass';
+
 li.key {
   transition: all 0.07s;
   margin: 1rem;
@@ -8,7 +10,10 @@ li.key {
 
 li.active {
   transform: scale(1.5);
-  border: 2px solid red;
+  border: 2px solid yellowgreen;
 }
 
-@import './../../node_modules/bulma/bulma.sass';
+li.active:hover {
+  transform: scale(1.5);
+  border: 2px solid yellowgreen;
+}
