@@ -144,7 +144,7 @@ var bankOne = [{
 }, {
   keyCode: 90,
   keyTrigger: 'Z',
-  id: "Kick-n'-Hat",
+  id: 'Kick-n-Hat',
   url: 'https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3'
 }, {
   keyCode: 88,
@@ -174,54 +174,44 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener('DOMContentLoaded', function () {
   //je recup #root
-  var root = document.getElementById("root"); //je .map() bankOne pour créer les <li>
+  var root = document.getElementById('drum-machine'); //je .map() bankOne pour créer les <li>
 
   var elem = _bankOne.default.map(function (el) {
-    return "<li class=\"button is-large key drum-pad\" id=\"".concat(el.id, "\" data-key=\"").concat(el.keyCode, "\">").concat(el.keyTrigger, "\n        <audio src=\"").concat(el.url, "\" class=\"clip\" id=\"").concat(el.keyTrigger, "\" data-key=").concat(el.keyCode, "></audio>\n        </li>");
-  }).join(""); //j'injecte mes li dans root
+    return "<li class=\"button is-large key drum-pad\" id=\"".concat(el.id, "\" data-key=\"").concat(el.keyCode, "\">").concat(el.keyTrigger, "\n        <audio src=\"").concat(el.url, "\" class=\"clip\" id=\"").concat(el.keyTrigger, "\" data-key=").concat(el.keyCode, " name=").concat(el.id, ">\n        </audio>\n        </li>");
+  }).join(''); //j'injecte mes li dans root
 
 
-  root.innerHTML = "<div class=\"hero is-fullheight\">\n                      <div class=\"hero-body\">\n                        <div class=\"has-text-centered container\">\n                          <ul id=\"display\">".concat(elem, "</ul>\n                          <div class=\"title\" id=\"soundName\"></div>\n                        </div>\n                      </div>\n                    </div>"); //je recup #soundName
+  root.innerHTML = "\n  <div class=\"hero is-fullheight\">\n  <div class=\"hero-body\">\n    <div class=\"container box\">\n      <div class=\"has-text-centered\">\n        <div class=\"title\">DrumMachine</div>\n        <div class=\"subtitle\">FreeCodeCamp</div>\n      </div>\n      <hr />\n      <div class=\"has-text-centered container\">\n        <ul>\n          ".concat(elem, "\n        </ul>\n        <div class=\"title\" id=\"display\"></div>\n      </div>\n    </div>\n  </div>\n</div>\n  "); //je recup #soundName
 
-  var soundName = document.getElementById("soundName");
-  window.addEventListener("keydown", drumMachine); //event click drum-pad
+  var soundName = document.getElementById('display');
+  soundName.innerText = 'play';
+  window.addEventListener('keydown', drumMachine); //event click drum-pad
 
-  var drums = _toConsumableArray(document.getElementsByClassName("drum-pad")).map(function (drum) {
-    return drum.addEventListener("click", drumMachine);
+  var drums = _toConsumableArray(document.getElementsByClassName('drum-pad')).map(function (drum) {
+    return drum.addEventListener('click', drumMachine);
   });
 
-  var buttonsReaction = _toConsumableArray(document.getElementsByClassName("button")).map(function (li) {
-    return li.addEventListener("click", drumMachine);
+  var buttonsReaction = _toConsumableArray(document.getElementsByClassName('button')).map(function (li) {
+    return li.addEventListener('click', drumMachine);
   });
 
   function drumMachine(e) {
-    var audio = document.querySelector("audio[data-key=\"".concat(e.keyCode, "\"]"));
-    var key = document.querySelector("li.key[data-key=\"".concat(e.keyCode, "\"]"));
-    console.log(e);
-    var clickButton = e.target.dataset.key;
-
-    if (clickButton) {
-      audio = document.querySelector("audio[data-key=\"".concat(clickButton, "\"]"));
-      key = document.querySelector("li.key[data-key=\"".concat(clickButton, "\"]"));
-    }
-
+    console.log('type => ', e);
+    var audio = document.querySelector("audio[data-key=\"".concat(e.keyCode, "\"]")) || document.querySelector("audio[data-key=\"".concat(e.target.dataset.key, "\"]"));
+    var key = audio.parentElement;
+    console.log('key => ', key);
     if (!audio) return;
     audio.currentTime = 0;
     audio.play();
-    key.classList.add("active");
-    soundName.innerText = e.target.id;
-    console.log(soundName);
-    console.log(e);
-
-    var keys = _toConsumableArray(document.querySelectorAll("li.key")).map(function (key) {
-      return key.addEventListener("transitionend", removeClass);
-    });
+    key.classList.add('active');
+    soundName.innerText = "sound name : ".concat(audio.getAttribute('name'));
+    key.addEventListener('transitionend', removeClass);
 
     function removeClass(e) {
-      if (e.propertyName !== "transform") return;
-      this.classList.remove("active");
+      if (e.propertyName !== 'transform') return;
+      this.classList.remove('active');
     }
   }
 });
@@ -252,7 +242,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54885" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57403" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
